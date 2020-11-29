@@ -9,10 +9,12 @@ class TrollNumberUtilsTest : StringSpec({
         val three = 3.toTrollNumber()
         val five = 5.toTrollNumber()
         val eleven = 11.toTrollNumber()
+        val seventeen = 17.toTrollNumber()
 
         three.toString() shouldBe "three"
         five.toString() shouldBe "many-one"
         eleven.toString() shouldBe "many-many-three"
+        seventeen.toString() shouldBe "lots-one"
     }
 
     "Adding two troll numbers should generate correct complex troll numbers" {
@@ -20,15 +22,21 @@ class TrollNumberUtilsTest : StringSpec({
         val five = many + one
         val fifteen = many-many-many + three
         val ten = many-one + many-one
+        val eighteen = lots-two
+        val oneHundredTwentySix = lots-lots-lots-lots-lots-lots-lots-many-many-many-two
 
         two.value shouldBe 2
         five.value shouldBe 5
         fifteen.value shouldBe 15
         ten.value shouldBe 10
+        eighteen.value shouldBe 18
+        oneHundredTwentySix.value shouldBe 126
 
         two.toString() shouldBe "two"
         five.toString() shouldBe "many-one"
         fifteen.toString() shouldBe "many-many-many-three"
         ten.toString() shouldBe "many-many-two"
+        eighteen.toString() shouldBe "lots-two"
+        oneHundredTwentySix.toString() shouldBe "lots-lots-lots-lots-lots-lots-lots-many-many-many-two"
     }
 })

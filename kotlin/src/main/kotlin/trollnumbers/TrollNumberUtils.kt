@@ -39,8 +39,7 @@ fun Int.toTrollNumber(): TrollNumber {
         2 -> two
         3 -> three
         4 -> many
-        16 -> lots
-        else -> {
+        in 5..15 ->{
             val noOfManys = this / 4
             val manys = MutableList<TrollNumber>(noOfManys) { many }
 
@@ -50,9 +49,21 @@ fun Int.toTrollNumber(): TrollNumber {
                 manys.add(simple)
             }
             val (first, second) = manys.take(2)
-            return manys.drop(2).fold(TrollNumberExpression(first, second)){acc, next ->
+            manys.drop(2).fold(TrollNumberExpression(first, second)){acc, next ->
                 TrollNumberExpression(acc, next)
             }
+        }
+        16 -> lots
+        else -> {
+            val noLots = this / 16
+            val lotsList = List<TrollNumber>(noLots){ lots }
+            val rest = this % 16
+            val lotsExp = if(lotsList.size > 1){
+                lotsList.reduce{acc, next -> TrollNumberExpression(acc, next)}
+            } else {
+                lots
+            }
+            if(rest > 0) TrollNumberExpression(lotsExp, rest.toTrollNumber()) else lotsExp
         }
     }
 }
