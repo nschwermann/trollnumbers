@@ -19,7 +19,7 @@ class TrollNumberUtilsTest : StringSpec({
         val two = one + one
         val five = many + one
         val fifteen = many-many-many + three
-        val ten = (many-one) + (many-one)
+        val ten = many-one + many-one
 
         two.value shouldBe 2
         five.value shouldBe 5
