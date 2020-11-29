@@ -16,7 +16,7 @@ class ComplexTrollNumberTest : StringSpec({
                 row("many-many-three", 11),
                 row("many", many.value),
                 row("many-many-many-many", lots.value),
-                row("lots", lots.value),
+                row("lots", lots.value)
         )
 
         forAll(table) { string, expectedValue ->
