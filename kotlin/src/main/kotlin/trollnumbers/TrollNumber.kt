@@ -1,7 +1,8 @@
 package trollnumbers
 
 /**
- * An interface for troll numbers
+ * A numeral system based on powers of 4.
+ * The base numerals are [one] (1), [two] (2), [three] (3), [many] (4) and [lots] (16), which can be combined to form higher numbers.
  *
  * @property value The troll number's numeric value
  */
@@ -35,14 +36,15 @@ object lots : TrollNumber(16){
 /**
  * A class for creating complex troll numbers, given a pair of troll numbers
  *
- * For simple troll numbers, see [TrollNumber]
+ * For simple troll numbers, see [one], [two], [three], [many], [lots]
  *
  * For parsing troll numbers from strings, see [toTrollNumber]
  *
- * @property trollNumbers A list of troll numbers to construct the complex troll number from
- * @constructor Create a complex troll number given a list of troll numbers
+ * @property first A simple troll number or expression
+ * @property second A simple troll number or expression
+ * @constructor Evaluates the two troll numbers
  */
-internal data class TrollNumberExpression(val first: TrollNumber, val second : TrollNumber) : TrollNumber(run {
+data class TrollNumberExpression(val first: TrollNumber, val second : TrollNumber) : TrollNumber(run {
     val eval1 = when (first) {
         is TrollNumberExpression -> first.first.value + first.second.value
         else -> first.value
