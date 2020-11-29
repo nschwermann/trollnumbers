@@ -44,17 +44,7 @@ object lots : TrollNumber(16){
  * @property second A simple troll number or expression
  * @constructor Evaluates the two troll numbers
  */
-data class TrollNumberExpression(val first: TrollNumber, val second : TrollNumber) : TrollNumber(run {
-    val eval1 = when (first) {
-        is TrollNumberExpression -> first.first.value + first.second.value
-        else -> first.value
-    }
-    val eval2 = when (second) {
-        is TrollNumberExpression -> second.first.value + second.second.value
-        else -> second.value
-    }
-    eval1 + eval2
-}) {
+data class TrollNumberExpression(val first: TrollNumber, val second : TrollNumber) : TrollNumber(first.value + second.value) {
     override fun toString() : String = "$first-$second"
 
 }
