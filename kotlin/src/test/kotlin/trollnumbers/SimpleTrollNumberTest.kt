@@ -33,7 +33,6 @@ class SimpleTrollNumberTest : StringSpec({
                 row(three, "three"),
                 row(many, "many"),
                 row(lots, "lots"),
-                row(SimpleTrollNumber(42), "unknown")
         )
 
         forAll(table) { constant, expectedToString ->

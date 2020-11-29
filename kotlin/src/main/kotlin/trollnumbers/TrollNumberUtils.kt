@@ -12,7 +12,7 @@ fun String.toTrollNumber(): TrollNumber {
     if (this.contains("-")) {
         val split = this.split("-")
         val trollNumbers = split.map { s -> s.toTrollNumber() }
-        return ComplexTrollNumber(trollNumbers)
+        return trollNumbers.reduce { acc, trollNumber -> acc + trollNumber }
     }
 
     return when (this) {
@@ -42,14 +42,17 @@ fun Int.toTrollNumber(): TrollNumber {
         16 -> lots
         else -> {
             val noOfManys = this / 4
-            val manys = MutableList(noOfManys) { many }
+            val manys = MutableList<TrollNumber>(noOfManys) { many }
 
             val rest = this % 4
             if (rest > 0) {
-                val simple = SimpleTrollNumber(rest)
+                val simple = rest.toTrollNumber()
                 manys.add(simple)
             }
-            return ComplexTrollNumber(manys)
+            val (first, second) = manys.take(2)
+            return manys.drop(2).fold(TrollNumberExpression(first, second)){acc, next ->
+                TrollNumberExpression(acc, next)
+            }
         }
     }
 }
@@ -62,7 +65,7 @@ fun Int.toTrollNumber(): TrollNumber {
  * * many-many-three => many-many-three
  * * many-many-many-two => many-many-many-two
  */
-operator fun TrollNumber.minus(other: TrollNumber): TrollNumber = ComplexTrollNumber(listOf(this, other))
+operator fun TrollNumber.minus(other: TrollNumber): TrollNumber = TrollNumberExpression(this, other)
 
 /**
  * Add two troll numbers to create a new one.
