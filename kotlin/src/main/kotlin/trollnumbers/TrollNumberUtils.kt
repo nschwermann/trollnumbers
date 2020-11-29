@@ -65,7 +65,7 @@ fun Int.toTrollNumber(): TrollNumber {
  * * many-many-three => many-many-three
  * * many-many-many-two => many-many-many-two
  */
-operator fun TrollNumber.minus(other: TrollNumber): TrollNumber = TrollNumberExpression(this, other).let { it.value.toTrollNumber() }
+operator fun TrollNumber.minus(other: TrollNumber): TrollNumber = TrollNumberExpression(this, other).value.toTrollNumber()
 
 /**
  * Add two troll numbers to create a new one.
