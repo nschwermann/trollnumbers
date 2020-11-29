@@ -35,23 +35,18 @@ fun String.toTrollNumber(): TrollNumber {
  */
 fun Int.toTrollNumber(): TrollNumber {
     return when (this) {
+        in Int.MIN_VALUE .. 0 -> throw IllegalArgumentException("Unknown troll number")
         1 -> one
         2 -> two
         3 -> three
         4 -> many
         in 5..15 ->{
             val noOfManys = this / 4
-            val manys = MutableList<TrollNumber>(noOfManys) { many }
-
+            val manyExpression = if(noOfManys > 1){
+                List<TrollNumber>(noOfManys){many}.reduce{acc, next -> TrollNumberExpression(acc, next)}
+            } else many
             val rest = this % 4
-            if (rest > 0) {
-                val simple = rest.toTrollNumber()
-                manys.add(simple)
-            }
-            val (first, second) = manys.take(2)
-            manys.drop(2).fold(TrollNumberExpression(first, second)){acc, next ->
-                TrollNumberExpression(acc, next)
-            }
+            if(rest > 0) TrollNumberExpression(manyExpression, rest.toTrollNumber()) else manyExpression
         }
         16 -> lots
         else -> {
@@ -76,7 +71,7 @@ fun Int.toTrollNumber(): TrollNumber {
  * * many-many-three => many-many-three
  * * many-many-many-two => many-many-many-two
  */
-operator fun TrollNumber.minus(other: TrollNumber): TrollNumber = TrollNumberExpression(this, other).value.toTrollNumber()
+operator fun TrollNumber.minus(other: TrollNumber): TrollNumber = this + other
 
 /**
  * Add two troll numbers to create a new one.
